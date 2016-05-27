@@ -1,0 +1,138 @@
+/*1 로만들기 */
+
+표현1)
+#include <iostream>
+#include <utility>
+#include <limits.h>
+#include <fstream>
+#include <string>
+#include <string.h>
+#include <queue>
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+#include <set>
+#include <map>
+#include <vector>
+#include <stack>
+#include <queue>
+#define INF 987654321
+using namespace std;
+int n;
+queue<pair<int,int>> myQ;
+int check[1000111];
+int main() {
+    scanf("%d",&n);
+    pair<int, int> myPair;
+    myPair.first = n; //n
+    myPair.second = 0; //cnt;
+    pair<int, int> mPair;
+    pair<int, int> mPair1;
+    pair<int, int> mPair2;
+ 
+    check[n] = 1;
+     
+    myQ.push(myPair);
+     
+    while (!myQ.empty()) {
+        mPair = myQ.front();
+        myQ.pop();
+        if (mPair.first == 1) {
+            break;
+        }
+        if (mPair.first % 3 == 0 && check[mPair.first / 3] !=1 ) {
+             
+            check[mPair.first / 3] = 1;
+            myQ.push(make_pair(mPair.first / 3,mPair.second+1));
+        }if(mPair.first % 2 == 0 && check[mPair.first / 2] != 1){
+             
+            check[mPair.first / 2] = 1;
+            myQ.push(make_pair(mPair.first / 2, mPair.second+1));
+         
+        }if (mPair.first - 1 >= 1 && check[mPair.first - 1] !=1) {
+             
+            check[mPair.first -1] = 1;
+            myQ.push(make_pair(mPair.first -1, mPair.second+1));
+         
+        }
+    }
+    printf("%d\n", mPair.second);
+    return 0;
+             
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+표현2)
+#include <iostream>
+#include <utility>
+#include <limits.h>
+#include <fstream>
+#include <string>
+#include <string.h>
+#include <queue>
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+#include <set>
+#include <map>
+#include <vector>
+#include <stack>
+#include <queue>
+#define INF 987654321
+using namespace std;
+int n;
+queue<pair<int, int>> myQ;
+int check[1000111];
+int main() {
+	scanf("%d", &n);
+	pair<int, int> myPair;
+	myPair.first = n; //n
+	myPair.second = 0; //cnt;
+	pair<int, int> mPair;
+	pair<int, int> mPair1;
+	pair<int, int> mPair2;
+
+	check[n] = 1;
+
+	myQ.push(myPair);
+
+	while (!myQ.empty()) {
+		mPair = myQ.front();
+		myQ.pop();
+		if (mPair.first == 1) {
+			break;
+		}
+		if (mPair.first % 3 == 0 && check[mPair.first / 3] != 1) {
+			mPair2.first = mPair.first / 3;
+			mPair2.second = mPair.second + 1;
+			check[mPair2.first] = 1;
+			myQ.push(mPair2);
+		}if (mPair.first % 2 == 0 && check[mPair.first / 2] != 1) {
+			mPair2.first = mPair.first / 2;
+			mPair2.second = mPair.second + 1;
+			check[mPair2.first] = 1;
+			myQ.push(mPair2);
+
+		}if (mPair.first - 1 >= 1 && check[mPair.first - 1] != 1) {
+			mPair2.first = mPair.first - 1;
+			mPair2.second = mPair.second + 1;
+			check[mPair.first - 1] = 1;
+			myQ.push(mPair2);
+
+		}
+	}
+	printf("%d\n", mPair.second);
+	return 0;
+
+}
+//////////////////////////////////////////////////////////////////////
+의문점 : 방법1) 에서 왜 mPair.second+1 가 아닌 mPair.second++를 하면 에러가 나는지,
+그리고 나는 처음엔 트리구조를 생각했는데 예를들면
+              10
+            9    5
+          8  3     4
+         7    1   3 2
+      
+그래서 각 if문에 새로운 변수들이 각각각 생겨야 한다고 판단해서, 많은 오류를 범했다.
+어떤걸 잘못생각한걸까?
