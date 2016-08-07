@@ -1,0 +1,26 @@
+#include<cstdio>
+#include<algorithm>
+using namespace std;
+#define INF 987564321
+
+//dp[i] = i를 마지막으로 더하는 배열
+int arr[1001];
+int dp[1001];
+int N;
+int main() {
+	scanf("%d",&N);
+	for (int i = 1; i <= N; i++) {
+		scanf("%d",&arr[i]);
+	}
+
+	for (int i = 1; i <= N; i++) {
+		dp[i] = arr[i];
+		for (int j = 1; j < i; j++) {
+			if (arr[j]<arr[i] && dp[j] + arr[i] >dp[i]) {
+				dp[i] = dp[j] + arr[i];
+			}
+		}
+	}
+	printf("%d\n",*max_element(dp,dp+N));
+	return 0;
+}
