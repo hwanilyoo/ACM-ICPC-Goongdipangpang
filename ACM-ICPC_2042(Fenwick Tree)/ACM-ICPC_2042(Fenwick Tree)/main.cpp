@@ -1,0 +1,59 @@
+#include<cstdio>
+#include<vector>
+using namespace std;
+#define INF 987654321
+typedef long long ll;
+void update(vector<ll> &Tree, ll i, ll num);
+ll sum(vector<ll> &Tree, ll i);
+int main() {
+	ll N, M, K;
+	scanf("%lld %lld %lld",&N,&M,&K);
+	
+	vector<ll> myV(N + 1, 0);
+	vector<ll> Tree(N + 1, 0);
+
+	for (int i = 1; i <= N; i++) {
+		scanf("%lld",&myV[i]);
+		update(Tree, i, myV[i]);
+	}
+	
+	for (int i = 0; i < (M + K); i++) {
+		ll a, b, c;
+		scanf("%lld %lld %lld", &a, &b, &c); // 1 3 6 > 3번째 위치의 값을 6으로 변경
+		if (a == 1) {
+			ll change = c - myV[b];
+			myV[b] = c;
+
+			update(Tree, b, change);
+
+		}
+		else {
+			
+			printf("%lld\n",sum(Tree,c)-sum(Tree,b-1));
+		}
+	}
+
+
+	return 0;
+}
+void update(vector<ll> &Tree, ll i, ll num) {
+	
+	while(i<Tree.size()){
+		Tree[i] += num;
+		i += (i&-i);
+	}
+	
+
+}
+
+ll sum(vector<ll> &Tree, ll i) {
+	ll res = 0;
+
+	while (i > 0) {
+		res += Tree[i];
+		i -= (i&-i);
+	}
+	return res;
+}
+
+
