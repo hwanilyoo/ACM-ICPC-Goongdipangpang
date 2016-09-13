@@ -1,0 +1,37 @@
+/*
+점화식 : dp[i]=i번째 계단에 올라 갔을때의 최대 값
+dp[i]=arr[i]+arr[i-1] +dp[i-3] // 직전 계단을 밟았을 시, 연속해서 3계단을 밟을 수 없으므로, 전전전까지의 값을 더해줌
+dp[i]=arr[i]+dp[i-2] // 전전계단을 밟았을시, 직전 계단을 밟을 수 없으므로, 전전까지의 계단밟은 값을 더해줌
+*/
+#include<stdio.h>
+#include<algorithm>
+#include<iostream>
+using namespace std;
+int arr[333];
+int dp[333];
+int main() {
+	int T;
+	scanf("%d",&T);
+	
+	for (int i = 1; i <= T; i++){
+		scanf("%d",&arr[i]);
+	}
+
+	//dp[0] = arr[0];//10;
+	dp[1] = arr[1];
+	dp[2] = arr[1] + arr[2];
+	//printf("\n\n");
+	for (int i = 3; i <= T; i++){
+		/* dp[i] = arr[i]+전꺼+전전전꺼
+		   dp[i] = arr[i]+전전꺼
+		   둘중에 최대값
+		*/
+		dp[i] = max((arr[i] + dp[i - 2]), (arr[i] +arr[i-1]+dp[i-3]));
+		
+		
+	}
+	//printf("\n");
+	printf("%d\n",dp[T]);
+	return 0;
+}
+
