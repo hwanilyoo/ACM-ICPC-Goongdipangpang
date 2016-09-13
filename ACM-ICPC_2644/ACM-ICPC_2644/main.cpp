@@ -1,0 +1,51 @@
+/* https://www.acmicpc.net/problem/2644 */
+
+#include<stdio.h>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<queue>
+using namespace std;
+void dfs(int p1);
+int arr[111][111];
+int cnt, m, n, p2;
+bool check[111];
+int dist[111];
+int main() {
+	int p1;
+	scanf("%d", &n);
+	scanf("%d %d", &p1, &p2);
+	scanf("%d", &m);
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		scanf("%d %d", &a, &b);
+		arr[a][b] = arr[b][a] = 1;
+	}
+
+	for (int i = 0; i <= n; i++)dist[i] = -1;
+
+	dist[p1] = 0;
+
+	dfs(p1);
+
+	printf("%d\n", dist[p2]);
+	return 0;
+}
+void dfs(int p1) {
+	check[p1] = true;
+
+	for (int k = 1; k <= n; k++) {
+		if (arr[p1][k] && check[k] != true) {
+			dist[k] = dist[p1] + 1;
+			dfs(k);
+		}
+	}
+}
+
+/*DFS사용*/
+
+/*  풀이.
+	계산해야하는 촌수가 7, 3이면 7을 root로 보고 코드를 작성하였는데,
+	거리를 저장하는 배열을 만들어서 활용하였다.거리를 저장하는 배열이 없으면 끊어진 부분이 - 1인 것을 확인 할 수 없엇다.
+	그리고 이전 번호의 dist값을 + 1하여 누적 시켰다.
+*/
